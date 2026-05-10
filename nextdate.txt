@@ -1,0 +1,76 @@
+day = int(input("Enter day: "))
+month = int(input("Enter month: "))
+year = int(input("Enter year: "))
+
+if (year % 400 == 0) or (year % 4 == 0 and year % 100 != 0):
+    leap = True
+else:
+    leap = False
+
+if month in [1, 3, 5, 7, 8, 10, 12]:
+    max_day = 31
+
+elif month in [4, 6, 9, 11]:
+    max_day = 30
+
+elif month == 2:
+    if leap:
+        max_day = 29
+    else:
+        max_day = 28
+
+else:
+    print("Invalid month")
+    exit()
+
+if day < 1 or day > max_day:
+    print("Invalid day")
+
+else:
+    if day < max_day:
+        next_day = day + 1
+        next_month = month
+        next_year = year
+
+    else:
+        next_day = 1
+
+        if month == 12:
+            next_month = 1
+            next_year = year + 1
+
+        else:
+            next_month = month + 1
+            next_year = year
+
+    print("Next Date =", next_day, "/", next_month, "/", next_year)
+
+*Decision Table Based Testing
+
+| Rule | Month Type    | Last Day? | Leap Year? | Action                 |
+| ---- | ------------- | --------- | ---------- | ---------------------- |
+| R1   | 31-day month  | No        | -          | Increase day by 1      |
+| R2   | 31-day month  | Yes       | -          | Day=1, Month+1         |
+| R3   | 30-day month  | No        | -          | Increase day by 1      |
+| R4   | 30-day month  | Yes       | -          | Day=1, Month+1         |
+| R5   | February      | No        | No         | Increase day by 1      |
+| R6   | February      | Yes       | No         | Day=1, Month+1         |
+| R7   | February      | No        | Yes        | Increase day by 1      |
+| R8   | February      | Yes       | Yes        | Day=1, Month+1         |
+| R9   | December      | Yes       | -          | Day=1, Month=1, Year+1 |
+| R10  | Invalid input | -         | -          | Print Invalid          |
+
+
+TEST CASES
+| TC | Input Date | Expected Output |
+| -- | ---------- | --------------- |
+| 1  | 15/1/2025  | 16/1/2025       |
+| 2  | 31/1/2025  | 1/2/2025        |
+| 3  | 20/4/2025  | 21/4/2025       |
+| 4  | 30/4/2025  | 1/5/2025        |
+| 5  | 27/2/2025  | 28/2/2025       |
+| 6  | 28/2/2025  | 1/3/2025        |
+| 7  | 28/2/2024  | 29/2/2024       |
+| 8  | 29/2/2024  | 1/3/2024        |
+| 9  | 31/12/2025 | 1/1/2026        |
+| 10 | 32/1/2025  | Invalid day     |
